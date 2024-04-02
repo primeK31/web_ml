@@ -9,3 +9,7 @@ Website functionalities:
 5) Admins can check assignment solutions from learners
 6) Assignments creation
 7) User-friendly controls for navigation.
+
+
+Ashirbekov Sanzhar
+Tolebek Nazym
