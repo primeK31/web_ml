@@ -12,5 +12,7 @@ Website functionalities:
 
 
 Ashirbekov Sanzhar - 22B030519
+
 Tolebek Nazym - 22B030452
+
 Koyshybay Erkebulan - 22B030551
