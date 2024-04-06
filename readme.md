@@ -11,5 +11,6 @@ Website functionalities:
 7) User-friendly controls for navigation.
 
 
-Ashirbekov Sanzhar
-Tolebek Nazym
+Ashirbekov Sanzhar - 22B030519
+Tolebek Nazym - 22B030452
+Koyshybay Erkebulan - 22B030551
