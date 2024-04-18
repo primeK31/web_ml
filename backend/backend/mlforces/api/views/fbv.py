@@ -58,3 +58,14 @@ def task_solution(request, pk=None):
     products_json = [p.to_json() for p in task.solutions.all()]
 
     return JsonResponse(products_json, safe=False)
+
+
+def task_comment(request, pk=None):
+    try:
+        task = Task.objects.get(id=pk)
+    except Task.DoesNotExist as e:
+        return JsonResponse({"error": str(e)})
+
+    comments_json = [comment.to_json() for comment in task.comments.all()]
+
+    return JsonResponse(comments_json, safe=False)

@@ -1,7 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Task(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
+    start_time = models.DateTimeField(null=True, blank=True)
+
     name = models.CharField(max_length=255)
     statement = models.TextField()
 
@@ -9,10 +13,13 @@ class Task(models.Model):
         return self.name
 
     def to_json(self):
-        return {'name': self.name, 'statement': self.statement}
+        return {'author': self.author.id, 'name': self.name, 'statement': self.statement, 'start_time': self.start_time}
 
 
 class Solution(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='solutions', null=True, blank=True)
+    submit_time = models.DateTimeField(null=True, blank=True)
+
     content = models.TextField()
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="solutions")
 
@@ -20,5 +27,27 @@ class Solution(models.Model):
         return self.content
 
     def to_json(self):
-        return {'content': self.content, 'task': self.task.id }
+        return {'author': self.author.id, 'content': self.content, 'task': self.task.id, 'submit_time': self.submit_time}
 
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments', default=0)
+
+    content = models.TextField()
+    votes = models.IntegerField()
+
+    def __str__(self):
+        return self.content
+
+    def to_json(self):
+        return {'task': self.task.id, 'content': self.content, 'votes': self.votes}
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #  avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username

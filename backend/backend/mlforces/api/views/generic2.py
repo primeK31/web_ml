@@ -2,8 +2,8 @@ from rest_framework import mixins, generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import Task, Solution
-from api.serializers import TaskSerializer, TaskSerializer2, SolutionSerializer2
+from api.models import Task, Solution, Comment
+from api.serializers import TaskSerializer, TaskSerializer2, SolutionSerializer2, CommentSerializer2
 
 
 class TaskListCreate(generics.ListCreateAPIView):
@@ -24,4 +24,14 @@ class SolutionListCreate(generics.ListCreateAPIView):
 class SolutionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Solution.objects.all()
     serializer_class = SolutionSerializer2
+
+
+class CommentListCreate(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
+
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer2
 
