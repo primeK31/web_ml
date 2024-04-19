@@ -7,6 +7,7 @@ class Task(models.Model):
     start_time = models.DateTimeField(null=True, blank=True)
 
     name = models.CharField(max_length=255)
+    points = models.IntegerField(default=0)
     statement = models.TextField()
 
     def __str__(self):
@@ -21,6 +22,7 @@ class Solution(models.Model):
     submit_time = models.DateTimeField(null=True, blank=True)
 
     content = models.TextField()
+    points = models.IntegerField(default=0)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="solutions")
 
     def __str__(self):
@@ -47,7 +49,11 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     #  avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
+    points = models.IntegerField(default=0)
     bio = models.TextField()
 
     def __str__(self):
         return self.user.username
+
+    def to_json(self):
+        return {'user': self.user.id, 'bio': self.bio}

@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
-from api.models import Task
-from api.serializers import TaskSerializer
+from api.models import Task, Profile
+from api.serializers import TaskSerializer, ProfileSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.request import Request
@@ -22,6 +22,21 @@ def task_list(request):
             return Response(serializer.data)
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
+
+
+#  @api_view(["GET", "POST"])
+#  def profile_list(request):
+#      if request.method == "GET":
+#          profiles = Profile.objects.all()
+#          serializer = ProfileSerializer(profiles, many=True)
+#          return Response(serializer.data)
+#      elif request.method == "POST":
+#          serializer = ProfileSerializer(data=request.data)
+#          if serializer.is_valid():
+#              serializer.save()
+#              return Response(serializer.data)
+#          return Response(serializer.errors,
+#                          status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "PUT", "DELETE"])
@@ -49,6 +64,28 @@ def get_task(request, pk=None):
         return JsonResponse({"deleted": True})
 
 
+@api_view(["GET", "PUT"])
+def get_profile(request, pk=None):
+    try:
+        profile = Profile.objects.get(id=pk)
+    except Profile.DoesNotExist as e:
+        return JsonResponse({'error': str(e)})
+
+    if request.method == "GET":
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    elif request.method == "PUT":
+        serializer = ProfileSerializer(
+            instance=profile,
+            data=request.data
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+
 def task_solution(request, pk=None):
     try:
         task = Task.objects.get(id=pk)
@@ -69,3 +106,11 @@ def task_comment(request, pk=None):
     comments_json = [comment.to_json() for comment in task.comments.all()]
 
     return JsonResponse(comments_json, safe=False)
+
+
+@api_view(["GET"])
+def profile_list(request):
+    if request.method == "GET":
+        tasks = Profile.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)

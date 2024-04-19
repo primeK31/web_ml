@@ -1,6 +1,6 @@
 from django.urls import include, path
-from api.views import task_list, get_task, task_solution, task_comment
-from api.views import TaskListCreateAPIView, TaskDetailAPIView
+from api.views import task_list, get_task, task_solution, task_comment, get_profile
+from api.views import TaskListCreateAPIView, TaskDetailAPIView, UserDetailView, UserListAPIView
 from api.views import TaskListCreate, TaskDetail, SolutionListCreate, SolutionDetail, CommentListCreate, CommentDetail
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -19,4 +19,9 @@ urlpatterns = [
     path('comments/', CommentListCreate.as_view()),
     path('comments/<int:pk>', CommentDetail.as_view()),
     path('tasks/<int:pk>/comments', task_comment),
+
+    path('users/', UserListAPIView.as_view()),
+    path('users/<int:pk>', UserDetailView.as_view()),
+
+    path('profiles/<int:pk>', get_profile),
 ]

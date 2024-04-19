@@ -7,7 +7,23 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from api.models import Task
-from api.serializers import TaskSerializer, TaskSerializer2
+from api.serializers import TaskSerializer, TaskSerializer2, UserBasicSerializer
+
+from django.contrib.auth.models import User
+
+
+class UserListAPIView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserBasicSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class UserDetailView(APIView):
+    def get(self, request, pk):
+        user = User.objects.get(pk=pk)
+        serializer = UserBasicSerializer(user)
+        return Response(serializer.data)
 
 
 class TaskListCreateAPIView(APIView):

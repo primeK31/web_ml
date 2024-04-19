@@ -21,24 +21,52 @@ class TaskSerializer(serializers.Serializer):
         return instance
 
 
+class ProfileSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    bio = serializers.CharField()
+    points = serializers.IntegerField()
+
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    def create(self, validated_data):
+        instance = Profile(bio=validated_data.get('bio'), points=validated_data.get('points'), user=validated_data.get('user'))
+        instance.save()
+        return instance
+
+    def update(self, instance, validated_data):
+        instance.bio = validated_data.get("bio")
+        instance.points = validated_data.get('points')
+        instance.user = validated_data.get('user')
+        instance.save()
+        return instance
+
+
+class UserBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+
 class TaskSerializer2(serializers.ModelSerializer):
     name = serializers.CharField()
     statement = serializers.CharField()
     start_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    points = serializers.IntegerField()
 
     class Meta:
         model = Task
-        fields = ('id', 'name', 'statement', 'start_time', 'author')
+        fields = ('id', 'name', 'statement', 'start_time', 'author', 'points')
 
 
 class SolutionSerializer2(serializers.ModelSerializer):
     content = serializers.CharField()
     task = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all())
+    points = serializers.IntegerField()
 
     class Meta:
         model = Solution
-        fields = ('id', 'content', 'task')
+        fields = ('id', 'content', 'task', 'points')
 
 
 class CommentSerializer2(serializers.ModelSerializer):
