@@ -4,12 +4,12 @@ from api.models import Solution, Comment
 from api.serializers import SolutionSerializer2, CommentSerializer2
 
 
-class SolutionListCreate(generics.ListCreateAPIView):
+class SolutionListCreate(generics.ListCreateAPIView): # get, post
     queryset = Solution.objects.all()
     serializer_class = SolutionSerializer2
 
 
-class SolutionDetail(generics.RetrieveUpdateDestroyAPIView):
+class SolutionDetail(generics.RetrieveUpdateDestroyAPIView): # get, put, delete
     queryset = Solution.objects.all()
     serializer_class = SolutionSerializer2
 

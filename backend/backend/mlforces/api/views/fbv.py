@@ -105,7 +105,7 @@ def task_comment(request, pk=None):
 
     return JsonResponse(comments_json, safe=False)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET'])
 def get_rank(request, pk):
     profile = Profile.objects.get(id=pk)
     points = profile.points
