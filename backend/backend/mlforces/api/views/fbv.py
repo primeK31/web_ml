@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import logout as django_logout
 
+
 @api_view(["GET", "POST"])
 def task_list(request):
     if request.method == "GET":
@@ -59,7 +60,7 @@ def profile_list(request):
             serializer.save()
             return Response(serializer.data)
     return Response(serializer.errors,
-                         status=status.HTTP_400_BAD_REQUEST)
+                    status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET", "PUT"])
@@ -105,6 +106,29 @@ def task_comment(request, pk=None):
 
     return JsonResponse(comments_json, safe=False)
 
+
+@api_view(["GET", "POST"])
+def profile_list(request):
+    if request.method == "GET":
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = ProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def rank_list(request):
+    profiles = Profile.objects.order_by('-points').all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
 @api_view(['GET'])
 def get_rank(request, pk):
     profile = Profile.objects.get(id=pk)
@@ -116,6 +140,7 @@ def get_rank(request, pk):
     }
     
     return JsonResponse(context)
+
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -22,6 +22,8 @@ urlpatterns = [
     path('users/', UserListAPIView.as_view()),
     path('users/<int:pk>', UserDetailView.as_view()),
 
+    path('rating/', rank_list),
+    path('profiles/', profile_list),
     path('profiles/<int:pk>', get_profile),
     path('profiles/<int:pk>/rank', get_rank)
 ]
