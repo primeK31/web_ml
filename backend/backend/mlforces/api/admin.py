@@ -4,7 +4,7 @@ from .models import Task, Solution, Comment, Profile
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'author')
     search_fields = ('name',)
 
 

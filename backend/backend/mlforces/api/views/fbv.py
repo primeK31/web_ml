@@ -3,8 +3,9 @@ from api.models import Task, Profile
 from api.serializers import TaskSerializer, ProfileSerializer
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import logout as django_logout
 
 @api_view(["GET", "POST"])
 def task_list(request):
@@ -103,3 +104,21 @@ def task_comment(request, pk=None):
     comments_json = [comment.to_json() for comment in task.comments.all()]
 
     return JsonResponse(comments_json, safe=False)
+
+@api_view(['GET', 'PUT'])
+def get_rank(request, pk):
+    profile = Profile.objects.get(id=pk)
+    points = profile.points
+
+    context = {
+        'user': profile.user.username,
+        'rank': points,
+    }
+    
+    return JsonResponse(context)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    django_logout(request)
+    return Response({"success": "Successfully logged out."}, status=status.HTTP_200_OK)
