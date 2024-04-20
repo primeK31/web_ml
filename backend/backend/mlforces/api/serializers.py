@@ -47,18 +47,6 @@ class UserBasicSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 
-class TaskSerializer2(serializers.ModelSerializer):
-    name = serializers.CharField()
-    statement = serializers.CharField()
-    start_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
-    author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    points = serializers.IntegerField()
-
-    class Meta:
-        model = Task
-        fields = ('id', 'name', 'statement', 'start_time', 'author', 'points')
-
-
 class SolutionSerializer2(serializers.ModelSerializer):
     content = serializers.CharField()
     task = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all())
