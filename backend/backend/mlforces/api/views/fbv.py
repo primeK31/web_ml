@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import logout as django_logout
 
 
+@permission_classes([IsAuthenticated])
 @api_view(["GET", "POST"])
 def task_list(request):
     if request.method == "GET":
@@ -22,7 +23,7 @@ def task_list(request):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
-
+@permission_classes([IsAuthenticated])
 @api_view(["GET", "PUT", "DELETE"])
 def get_task(request, pk=None):
     try:
@@ -47,7 +48,7 @@ def get_task(request, pk=None):
         task.delete()
         return JsonResponse({"deleted": True})
 
-
+@permission_classes([IsAuthenticated])
 @api_view(["GET", "POST"])
 def profile_list(request):
     if request.method == "GET":
@@ -62,7 +63,7 @@ def profile_list(request):
     return Response(serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST)
 
-
+@permission_classes([IsAuthenticated])
 @api_view(["GET", "PUT"])
 def get_profile(request, pk=None):
     try:
@@ -84,7 +85,7 @@ def get_profile(request, pk=None):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
-
+@permission_classes([IsAuthenticated])
 def task_solution(request, pk=None):
     try:
         task = Task.objects.get(id=pk)
@@ -95,7 +96,7 @@ def task_solution(request, pk=None):
 
     return JsonResponse(products_json, safe=False)
 
-
+@permission_classes([IsAuthenticated])
 def task_comment(request, pk=None):
     try:
         task = Task.objects.get(id=pk)
@@ -106,7 +107,7 @@ def task_comment(request, pk=None):
 
     return JsonResponse(comments_json, safe=False)
 
-
+@permission_classes([IsAuthenticated])
 @api_view(["GET", "POST"])
 def profile_list(request):
     if request.method == "GET":
@@ -121,14 +122,14 @@ def profile_list(request):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
-
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def rank_list(request):
     profiles = Profile.objects.order_by('-points').all()
     serializer = ProfileSerializer(profiles, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def get_rank(request, pk):
     profile = Profile.objects.get(id=pk)
