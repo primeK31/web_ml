@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', logout),  # post
 
     path('register/', CreateUserView.as_view(), name='register'),
+    path('signup/', UserListAPIView.as_view()),
 
     path('tasks/', task_list),  # get, post
     path('tasks/<int:pk>', get_task),  # get, put, delete

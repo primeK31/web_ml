@@ -10,5 +10,11 @@ export class UserService {
   BASE_URL = 'http://127.0.0.1:8000'
   username = "";
   constructor(private http: HttpClient) { }
-  
+
+  createUser(newUser: User) :Observable<User> {
+    return this.http.post<User>(
+      `${this.BASE_URL}/api/signup/`,
+      newUser
+    )
+  }
 }
