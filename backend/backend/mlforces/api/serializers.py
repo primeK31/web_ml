@@ -56,6 +56,10 @@ class UserBasicSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email']
 
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
 
 class SolutionSerializer2(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
