@@ -85,6 +85,7 @@ def get_profile(request, pk=None):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
+
 @permission_classes([IsAuthenticated])
 def task_solution(request, pk=None):
     try:
@@ -123,12 +124,14 @@ def profile_list(request):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
+
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def rank_list(request):
     profiles = Profile.objects.order_by('-points').all()
     serializer = ProfileSerializer(profiles, many=True)
     return JsonResponse(serializer.data, safe=False)
+
 
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])

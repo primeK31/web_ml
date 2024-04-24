@@ -9,16 +9,24 @@ from django.contrib.auth.models import User
 
 
 class UserListAPIView(APIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         users = User.objects.all()
         serializer = UserBasicSerializer(users, many=True)
         return Response(serializer.data)
 
+    def post(self, request):
+        serializer = UserBasicSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  # insert into ...
+            return Response(serializer.data)
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserDetailView(APIView):
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
         user = User.objects.get(pk=pk)
