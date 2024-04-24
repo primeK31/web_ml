@@ -6,7 +6,7 @@
         </div>
 
         <div class="btns">
-            <button class="btn2" (click)="openModal()">
+            <button class="btn2" (click)="openModal(0)">
                 <img class="iconka" src="../../assets/cr.svg" alt="">
                 Create
             </button>
@@ -61,12 +61,12 @@
             </div>
             <div class="knopky">
                 <div class="btns">
-                    <button class="btn_update" (click)="updateTask(task.id)">
+                    <button class="btn_update" (click)="openModal(task.id)">
                         <img class="iconka" src="../../assets/cr.svg" alt="">
                         Update
                     </button>
-                    <app-update-task-modal *ngIf="showModal" (close)="closeModal()"></app-update-task-modal>
-                    <app-modal ></app-modal>
+                    <app-create-task-modal *ngIf="showModal" (close)="closeModal()"></app-create-task-modal>
+                    <app-modal></app-modal>
                 </div>
                 <button class="btn_delete" (click)="deleteTask(task.id)">Delete</button>
                 <button class="btn_comment" (click)="getIdForComment(task.id)" [routerLink]="['/comments']" >Comment</button>

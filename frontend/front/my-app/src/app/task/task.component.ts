@@ -8,13 +8,14 @@ import { PageUnavailableComponent } from "../page-unavailable/page-unavailable.c
 import { RouterModule } from '@angular/router';
 import { UpdateTaskModalComponent } from "../update-task-modal/update-task-modal.component";
 import { CommentService } from '../services/comment.service';
+import { UpdateModalComponent } from "../update-modal/update-modal.component";
 
 @Component({
     selector: 'app-task',
     standalone: true,
     templateUrl: './task.component.html',
     styleUrl: './task.component.css',
-    imports: [CommonModule, ModalComponent, CreateTaskModalComponent, PageUnavailableComponent, RouterModule, UpdateTaskModalComponent]
+    imports: [CommonModule, ModalComponent, CreateTaskModalComponent, PageUnavailableComponent, RouterModule, UpdateTaskModalComponent, UpdateModalComponent]
 })
 export class TaskComponent implements OnInit{
 
@@ -41,7 +42,9 @@ export class TaskComponent implements OnInit{
     this.modal.toggle();
   }
 
-  openModal() {
+  openModal(id: number) {
+    this.taskService.updateId = id;
+    console.log(id);
     this.showModal = true;
   }
 

@@ -10,6 +10,7 @@ import { TaskService } from './services/task.service';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { TaskComponent } from './task/task.component';
 import { NavigationService } from './services/navigation.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -26,11 +27,12 @@ export class AppComponent implements OnInit{
   password: string = '';
   showPassword: boolean = false;
 
-  constructor( private taskService: TaskService, private router: Router, private navigationService: NavigationService) {}
+  constructor( private taskService: TaskService, private router: Router, private navigationService: NavigationService, private userService: UserService) {}
 
   ngOnInit() {
     const access = localStorage.getItem('access');
     if (access) {
+      this.username = this.userService.username;
       this.logged = true;
     }
     const storedMenuItem = localStorage.getItem('activeMenuItem');

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../services/task.service';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,7 +18,7 @@ export class SignInComponent implements OnInit {
   password: string = '';
   showPassword: boolean = false;
 
-  constructor(private taskService: TaskService, private router: Router) {}
+  constructor(private taskService: TaskService, private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     const access = localStorage.getItem('access');
@@ -38,6 +39,7 @@ export class SignInComponent implements OnInit {
         this.logged = true;
         localStorage.setItem("access", data.access)
         localStorage.setItem("refresh", data.refresh)
+        this.userService.username = this.username;
         this.router.navigate(['/home']);
       });
   }

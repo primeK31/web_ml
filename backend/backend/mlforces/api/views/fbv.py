@@ -63,6 +63,7 @@ def profile_list(request):
     return Response(serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST)
 
+
 @permission_classes([IsAuthenticated])
 @api_view(["GET", "PUT"])
 def get_profile(request, pk=None):
@@ -108,6 +109,7 @@ def task_comment(request, pk=None):
     comments_json = [comment.to_json() for comment in task.comments.all()]
 
     return JsonResponse(comments_json, safe=False)
+
 
 @permission_classes([IsAuthenticated])
 @api_view(["GET", "POST"])

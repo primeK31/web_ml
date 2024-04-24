@@ -15,6 +15,7 @@ import { Task } from '../models';
 export class CreateTaskModalComponent {
   @Output() close = new EventEmitter<void>();
   newTask: Task
+  updateId = 0;
   constructor(private taskService:TaskService) { 
     this.newTask = {
       id: 0,
@@ -24,24 +25,46 @@ export class CreateTaskModalComponent {
       author: 1,
       points: 0
     };
+    this.updateId = taskService.updateId;
   }
 
-  onSubmit(form: NgForm) {
-    console.log('Creating task:', this.newTask);
+  onSubmit(form: NgForm, id: number) {
+    console.log(this.taskService.updateId);
+    if(this.taskService.updateId === 0) {
+      console.log(id);
+      console.log('Creating task:', this.newTask);
+      if (form.valid) {
+        this.taskService.createTask(this.newTask).subscribe({
+          next: (task) => {
+            console.log('Task created:', task);
+            this.closeModal();
+          },
+          error: (error) => {
+            console.error('Error creating task:', error);
+          }
+        });
+      }
+      else {
+        console.error('Form is invalid');
+      }
+   }
+   else {
+    console.log('Updating task:', this.newTask);
     if (form.valid) {
-      this.taskService.createTask(this.newTask).subscribe({
+      this.taskService.updateTask(id, this.newTask).subscribe({
         next: (task) => {
-          console.log('Task created:', task);
+          console.log('Task updated:', task);
           this.closeModal();
         },
         error: (error) => {
-          console.error('Error creating task:', error);
+          console.error('Error updating task:', error);
         }
       });
     }
     else {
       console.error('Form is invalid');
     }
+   }
   }
 
   closeModal() {

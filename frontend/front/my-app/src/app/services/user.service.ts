@@ -8,10 +8,7 @@ import { User } from '../models';
 })
 export class UserService {
   BASE_URL = 'http://127.0.0.1:8000'
+  username = "";
   constructor(private http: HttpClient) { }
-
-  getUser(id: number) : Observable<Comment> {
-    return this.http.get<Comment>(`/api/user/${id}`);
-  }
-
+  
 }
