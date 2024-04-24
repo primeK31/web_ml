@@ -13,9 +13,6 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
-    def to_json(self):
-        return {'author': self.author.id, 'name': self.name, 'statement': self.statement, 'start_time': self.start_time}
-
 
 class Solution(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='solutions', null=True, blank=True)
@@ -29,7 +26,8 @@ class Solution(models.Model):
         return self.content
 
     def to_json(self):
-        return {'author': self.author.id, 'content': self.content, 'task': self.task.id, 'submit_time': self.submit_time}
+        return {'author': self.author.id, 'content': self.content,
+                'submit_time': self.submit_time, 'points': self.points}
 
 
 class Comment(models.Model):
@@ -37,13 +35,13 @@ class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments', default=0)
 
     content = models.TextField()
-    votes = models.IntegerField()
+    votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.content
 
     def to_json(self):
-        return {'task': self.task.id, 'content': self.content, 'votes': self.votes}
+        return {'user': self.user.id, 'content': self.content, 'votes': self.votes}
 
 
 class Profile(models.Model):
@@ -54,6 +52,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    def to_json(self):
-        return {'user': self.user.id, 'bio': self.bio}

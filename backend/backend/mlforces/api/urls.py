@@ -1,27 +1,29 @@
 from django.urls import path
-from api.views import task_list, get_task, task_solution, task_comment, get_profile
-from api.views import UserDetailView, UserListAPIView
-from api.views import SolutionListCreate, SolutionDetail, CommentListCreate, CommentDetail
+from api.views import *
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 urlpatterns = [
-    path('login/', TokenObtainPairView.as_view()),
-    path('refresh/', TokenRefreshView.as_view()),
+    path('login/', TokenObtainPairView.as_view()), # post
+    path('refresh/', TokenRefreshView.as_view()), # post
+    path('logout/', logout), # post
 
-    path('tasks/', task_list),
-    path('tasks/<int:pk>', get_task),
+    path('tasks/', task_list), # get, post
+    path('tasks/<int:pk>', get_task), # get, put, delete
 
-    path('solutions/', SolutionListCreate.as_view()),
-    path('solutions/<int:pk>', SolutionDetail.as_view()),
-    path('tasks/<int:pk>/solutions', task_solution),
+    path('solutions/', SolutionListCreate.as_view()), # get, post
+    path('solutions/<int:pk>', SolutionDetail.as_view()), # get, put, delete
+    path('tasks/<int:pk>/solutions', task_solution), # get
 
-    path('comments/', CommentListCreate.as_view()),
-    path('comments/<int:pk>', CommentDetail.as_view()),
-    path('tasks/<int:pk>/comments', task_comment),
+    path('comments/', CommentListCreate.as_view()), # get, post
+    path('comments/<int:pk>', CommentDetail.as_view()), # get, put, delete
+    path('tasks/<int:pk>/comments', task_comment), # get
 
-    path('users/', UserListAPIView.as_view()),
-    path('users/<int:pk>', UserDetailView.as_view()),
+    path('users/', UserListAPIView.as_view()), # get
+    path('users/<int:pk>', UserDetailView.as_view()), # get
 
-    path('profiles/<int:pk>', get_profile),
+    path('rating/', rank_list), # get
+    path('profiles/', profile_list), # get, post
+    path('profiles/<int:pk>', get_profile), # get, put
+    path('profiles/<int:pk>/rank', get_rank) # get
 ]
