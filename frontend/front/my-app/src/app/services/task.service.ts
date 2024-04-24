@@ -9,6 +9,7 @@ import { Token, Task } from '../models';
 export class TaskService {
 
   BASE_URL = 'http://127.0.0.1:8000'
+  updateId = 0;
 
 
   constructor(private http: HttpClient) { }
@@ -32,6 +33,10 @@ export class TaskService {
       `${this.BASE_URL}/api/tasks/`,
       newTask
     )
+  }
+
+  updateTask(id: number, data: Task): Observable<any> {
+    return this.http.put(`${this.BASE_URL}/api/tasks/${id}`, data);
   }
 
   deleteTask(id: number): Observable<any> {

@@ -60,7 +60,14 @@
                 </ul>
             </div>
             <div class="knopky">
-                <button class="btn_update">Update</button>
+                <div class="btns">
+                    <button class="btn_update" (click)="updateTask(task.id)">
+                        <img class="iconka" src="../../assets/cr.svg" alt="">
+                        Update
+                    </button>
+                    <app-update-task-modal *ngIf="showModal" (close)="closeModal()"></app-update-task-modal>
+                    <app-modal ></app-modal>
+                </div>
                 <button class="btn_delete" (click)="deleteTask(task.id)">Delete</button>
                 <button class="btn_comment" [routerLink]="['/comments']" >Comment</button>
                 <button class="btn_solution" [routerLink]="['/solution', task.id]">Solution</button>

@@ -6,20 +6,27 @@ import { TaskService } from '../services/task.service';
 import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal.component';
 import { PageUnavailableComponent } from "../page-unavailable/page-unavailable.component";
 import { RouterModule } from '@angular/router';
+import { UpdateTaskModalComponent } from "../update-task-modal/update-task-modal.component";
 
 @Component({
     selector: 'app-task',
     standalone: true,
     templateUrl: './task.component.html',
     styleUrl: './task.component.css',
-    imports: [CommonModule, ModalComponent, CreateTaskModalComponent, PageUnavailableComponent, RouterModule]
+    imports: [CommonModule, ModalComponent, CreateTaskModalComponent, PageUnavailableComponent, RouterModule, UpdateTaskModalComponent]
 })
 export class TaskComponent implements OnInit{
 
   @ViewChild(ModalComponent) modal!: ModalComponent;
   tasks: Task[] = []
   showModal: boolean = false;
+  updateId = 0;
   constructor(private taskService: TaskService) {}
+
+  updateTask(id: number) {
+    this.showModal = true;
+    this.taskService.updateId = id;
+  }
 
   ngOnInit(): void {
       this.getTasks();
