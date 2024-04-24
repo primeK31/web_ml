@@ -7,6 +7,7 @@ import { CreateTaskModalComponent } from '../create-task-modal/create-task-modal
 import { PageUnavailableComponent } from "../page-unavailable/page-unavailable.component";
 import { RouterModule } from '@angular/router';
 import { UpdateTaskModalComponent } from "../update-task-modal/update-task-modal.component";
+import { CommentService } from '../services/comment.service';
 
 @Component({
     selector: 'app-task',
@@ -21,11 +22,15 @@ export class TaskComponent implements OnInit{
   tasks: Task[] = []
   showModal: boolean = false;
   updateId = 0;
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private commentService: CommentService) {}
 
   updateTask(id: number) {
     this.showModal = true;
     this.taskService.updateId = id;
+  }
+
+  getIdForComment(id: number) {
+    this.commentService.taskId = id;
   }
 
   ngOnInit(): void {

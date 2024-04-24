@@ -41,7 +41,7 @@ class Comment(models.Model):
         return self.content
 
     def to_json(self):
-        return {'user': self.user.id, 'content': self.content, 'votes': self.votes}
+        return {'user': self.user.id, 'username': self.user.username, 'content': self.content, 'votes': self.votes}
 
 
 class Profile(models.Model):

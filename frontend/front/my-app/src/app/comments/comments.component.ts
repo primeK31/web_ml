@@ -24,7 +24,7 @@ export class CommentsComponent implements OnInit{
       this.getComments();
   }
   getComments() {
-    this.commentService.getComments().subscribe((data) => {
+    this.commentService.getComments(this.commentService.taskId).subscribe((data) => {
       this.comments = data;
     })
   }

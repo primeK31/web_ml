@@ -9,12 +9,13 @@ import { Comment } from '../models';
 export class CommentService {
 
   BASE_URL = 'http://127.0.0.1:8000'
+  taskId = 0;
   
   constructor(private http: HttpClient) { }
 
-  getComments() :Observable<Comment[]> {
+  getComments(id: number) :Observable<Comment[]> {
     return this.http.get<Comment[]>(
-      `${this.BASE_URL}/api/comments/`
+      `${this.BASE_URL}/api/tasks/${id}/comments`
     )
   }
 }
