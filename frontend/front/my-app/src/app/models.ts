@@ -7,6 +7,13 @@ export interface Task {
     points: number;
 }
 
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+}
+
+
 export interface Token {
     access: string;
     refresh: string;
@@ -16,7 +23,7 @@ export interface Rating {
     id:number;
     bio:string;
     points:number;
-    user:number
+    username:string;
 }
 
 export interface Comment {
@@ -24,7 +31,7 @@ export interface Comment {
     id: number;
     content: string;
     votes: number;
-    user_id: number;
+    username: string;
     task: number;
 }
 

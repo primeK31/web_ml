@@ -10,6 +10,7 @@ import { Rating } from '../models';
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.css'
 })
+
 export class StatisticsComponent implements OnInit{
   rating: Rating[] = []
   constructor(private ratingService:RatingService) {}
@@ -19,7 +20,7 @@ export class StatisticsComponent implements OnInit{
   }
   getRating() {
     this.ratingService.getRating().subscribe((data) => {
-      this.rating = data
+      this.rating = data;
     })
   }
 }

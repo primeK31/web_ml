@@ -7,16 +7,18 @@ from api.serializers import UserBasicSerializer
 
 from django.contrib.auth.models import User
 
+
 class UserListAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         users = User.objects.all()
         serializer = UserBasicSerializer(users, many=True)
         return Response(serializer.data)
 
+
 class UserDetailView(APIView):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
         user = User.objects.get(pk=pk)

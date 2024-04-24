@@ -96,6 +96,7 @@ def task_solution(request, pk=None):
 
     return JsonResponse(products_json, safe=False)
 
+
 @permission_classes([IsAuthenticated])
 def task_comment(request, pk=None):
     try:

@@ -35,6 +35,7 @@ class ProfileSerializer(serializers.Serializer):
     points = serializers.IntegerField()
 
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    username = serializers.ReadOnlyField(source='user.username')
 
     def create(self, validated_data):
         instance = Profile(bio=validated_data.get('bio'), points=validated_data.get('points'),
@@ -74,8 +75,9 @@ class CommentSerializer2(serializers.ModelSerializer):
     votes = serializers.IntegerField()
 
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    username = serializers.ReadOnlyField(source='user.username')
     task = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all())
 
     class Meta:
         model = Comment
-        fields = ('user','id', 'content', 'votes', 'user_id', 'task')
+        fields = ('user', 'id', 'content', 'votes', 'username', 'task')

@@ -1,9 +1,9 @@
 <menu>
     <div class="tasks">
-        <div class="task" *ngFor="let r of rating">
+        <div class="task" *ngFor="let r of rating; let i = index">
             <div class="div1" >
                 <div class="task_title">
-                    <p class="title">Rating {{r.id}}</p>
+                    <p class="title">{{i + 1}}</p><p class="title">{{r.username}}</p>
                     <p class="note">({{r.points}} points)</p>
                 </div>
             </div>
@@ -11,7 +11,7 @@
                 <p class="desk1"> {{r.bio}} </p>
                 <img src="../../assets/divider.svg" alt="divider">
                 <ul class="desk2">
-                    <li>{{r.user}}<span class="pts">({{r.points}} points)</span></li>
+                    <li>{{r.username}}<span class="pts">({{r.points}} points)</span></li>
                 </ul>
             </div>
         </div>

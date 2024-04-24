@@ -6,7 +6,7 @@
         Task {{ comment.task }} Comment
       </div>
       <div class="card-body bg-light">
-        <h5 class="card-title">User {{ comment.user_id }}</h5>
+        <h5 class="card-title">{{ comment.username }}</h5>
         <p class="card-text">{{ comment.content }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <small class="text-muted">{{ comment.votes }} votes</small>
