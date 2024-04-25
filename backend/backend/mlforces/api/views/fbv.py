@@ -23,6 +23,7 @@ def task_list(request):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
+
 @permission_classes([IsAuthenticated])
 @api_view(["GET", "PUT", "DELETE"])
 def get_task(request, pk=None):
